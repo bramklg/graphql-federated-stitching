@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="bramklg" id="insert default products">
+    <insert tableName="products">
+      <column name="name" value="Kotlin in Action"/>
+      <column name="description" value="Kotlin in Action teaches you to use the Kotlin language for production-quality applications."/>
+      <column name="price" value="3599"/>
+      <column name="weight" value="120"/>
+    </insert>
+    <insert tableName="products">
+      <column name="name" value="GraphQL in Action"/>
+      <column name="description"
+              value="GraphQL in Action gives you the tools to get comfortable with the GraphQL language, build and optimize a data API service, and use it in a front-end client application."/>
+      <column name="price" value="3999"/>
+      <column name="weight" value="75"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

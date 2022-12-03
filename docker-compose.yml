@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  gateway:
+    image: gateway:latest
+    container_name: gateway
+    build:
+      context:
+        ./gateway/
+    environment:
+      - SERVER_PORT=9000
+      - INVENTORY_SERVICE=inventoryservice:9001
+      - PRODUCT_SERVICE=productservice:9002
+      - REVIEW_SERVICE=reviewservice:9003
+      - USER_SERVICE=userservice:9004
+    ports:
+      - "4000:9000"
+  inventoryservice:
+    image: inventoryservice:latest
+    container_name: inventoryservice
+    build:
+      context:
+        ./inventoryservice/
+    environment:
+      - SERVER_PORT=9001
+    ports:
+      - "9001:9001"
+  productservice:
+    image: productservice:latest
+    container_name: productservice
+    build:
+      context:
+        ./productservice/
+    environment:
+      - SERVER_PORT=9002
+    ports:
+      - "9002:9002"
+  reviewservice:
+    image: reviewservice:latest
+    container_name: reviewservice
+    build:
+      context:
+        ./reviewservice/
+    environment:
+      - SERVER_PORT=9003
+    ports:
+      - "9003:9003"
+  userservice:
+    image: userservice:latest
+    container_name: userservice
+    build:
+      context:
+        ./userservice/
+    environment:
+      - SERVER_PORT=9004
+    ports:
+      - "9004:9004"

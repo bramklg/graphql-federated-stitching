@@ -1,0 +1,55 @@
+"""
+A product review
+"""
+type Review @canonical {
+    id: ID!
+    body: String!
+    author: User!
+    product: Product!
+}
+
+type User @key(selectionSet: "{ id }") {
+    id: ID!
+    """
+    All reviews this user made
+    """
+    reviews: [Review!]!
+}
+
+type Product @key(selectionSet: "{ id }") {
+    id: ID!
+    """
+    All reviews about this product
+    """
+    reviews: [Review!]!
+}
+
+input CreateReviewInput {
+    body: String!
+    author: ID!
+    product: ID!
+}
+
+extend type Mutation {
+    createReview(review: CreateReviewInput!): Review
+}
+
+extend type Query {
+    review(id: ID!): Review
+
+    reviews: [Review!]!
+
+    """
+    *internal api*
+    """
+    _reviewProductsByProductIds(ids: [ID!]!): [Product]! @merge(keyField: "id" keyArg: "ids")
+
+    """
+    *internal api*
+    """
+    _reviewUsersByUserIds(ids: [ID!]!): [User]! @merge(keyField: "id" keyArg: "ids")
+}
+
+extend type Subscription  {
+    newReviews: Review
+}

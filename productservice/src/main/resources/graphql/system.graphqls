@@ -1,0 +1,6 @@
+extend type Query {
+    """
+    *internal api*
+    """
+    _sdl: String!
+}

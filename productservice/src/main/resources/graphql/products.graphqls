@@ -1,0 +1,34 @@
+"Represents a Product available for resale"
+type Product @canonical {
+    "The primary key of this product"
+    id: ID!
+    "The name of this product"
+    name: String!
+    "Description of this product"
+    description: String
+    "The price of this product in cents"
+    price: Int!
+    "Weight of the product in grams"
+    weight: Int!
+}
+
+input CreateProductInput {
+    name: String!
+    price: Int!
+    weight: Int!
+    description: String
+}
+
+extend type Mutation {
+    createProduct(product: CreateProductInput): Product!
+}
+
+extend type Query {
+    product(id: ID!): Product
+    products: [Product!]!
+
+    """
+    *internal api*
+    """
+    _productsByIds(ids: [ID!]!): [Product]! @merge(keyField: "id" keyArg: "ids")
+}

@@ -1,0 +1,25 @@
+type User @canonical {
+    id: ID!
+    name: String!
+    username: String!
+}
+
+input CreateUserInput {
+    name: String!
+    username: String!
+}
+
+extend type Mutation {
+    createUser(user: CreateUserInput): User!
+}
+
+extend type Query {
+    user(id: ID): User
+
+    users: [User!]!
+
+    """
+    *internal api*
+    """
+    _usersByIds(ids: [ID!]!): [User]! @merge(keyField: "id" keyArg: "ids")
+}

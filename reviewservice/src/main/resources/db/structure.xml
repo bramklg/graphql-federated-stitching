@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="Create table for reviews" author="bramklg">
+    <createTable tableName="reviews">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_reviews"/>
+      </column>
+      <column name="review" type="varchar(1000)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="author" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="product" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <createIndex indexName="idx_reviews_author" tableName="reviews">
+      <column name="author"/>
+    </createIndex>
+    <createIndex indexName="idx_reviews_product" tableName="reviews">
+      <column name="product"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>
