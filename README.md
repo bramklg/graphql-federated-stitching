@@ -6,8 +6,10 @@ It demonstrates using the GraphQL [Stitching Directives](https://the-guild.dev/g
 
 Aside from demonstrating the Stitching Directives it also demonstrates:
 * Subscriptions to Spring Boot 3 backends
-* File uploads to Spring Boot 3 backends (Update: not possible yet, see [this PR](https://github.com/spring-projects/spring-graphql/pull/430))
+* File uploads to Spring Boot 3 backends
 * Hot schema reloading (based on [this example from the stitching handbook](https://github.com/gmac/schema-stitching-handbook/tree/main/hot-schema-reloading))
+
+The Spring GraphQL implementation doesn't support file uploads yet, see [this PR](https://github.com/spring-projects/spring-graphql/pull/430)). The [GraphQL Spring Boot kickstarter project](https://github.com/graphql-java-kickstart/graphql-spring-boot) does support file uploads. Thats why the `userservice` doesn't use the Spring GraphQL implementation but the kickstarter project.
 
 ## Setup
 
@@ -74,4 +76,16 @@ mutation createReview {
         id
     }
 }
+```
+
+### File upload to user service
+The following `curl` command can be used to test file uploads to the user service. Since Yoga does not have file upload support in the gateway (yet) it won't work through the gateway but only when directly executing it on the `userservice`.
+
+Note: the user service currently doesn't do anything with the uploaded file
+```shell
+curl localhost:9004/graphql \
+  -F operations='{ "query": "mutation ($user: ID!, $file: Upload!) { addAvatar(user: $user, file: $file) }", "variables": { "file": null, "user": "1" } }' \
+  -F map='{ "0": ["variables.file"] }' \
+  -F 0=@graphql.png
+
 ```
