@@ -1,3 +1,5 @@
+scalar Upload
+
 type User @canonical {
     id: ID!
     name: String!
@@ -11,6 +13,8 @@ input CreateUserInput {
 
 extend type Mutation {
     createUser(user: CreateUserInput): User!
+
+    addAvatar(user: ID!, file: Upload!): String
 }
 
 extend type Query {

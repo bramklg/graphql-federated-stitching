@@ -30,27 +30,27 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-graphql")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    // Use graphql-java-kickstart instead of spring graphql to demo file uploads
+    implementation("com.graphql-java-kickstart:graphql-spring-boot-starter:15.0.0")
+    implementation("com.graphql-java-kickstart:graphql-java-kickstart:15.0.0")
+    implementation("com.graphql-java-kickstart:graphql-java-tools:13.0.2")
+    implementation("com.graphql-java:graphql-java:19.2")
+
     implementation("jakarta.validation:jakarta.validation-api")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.mapstruct:mapstruct:1.5.3.Final")
     implementation("org.liquibase:liquibase-core")
 
     kapt("org.mapstruct:mapstruct-processor:1.5.3.Final")
 
-    //runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("com.h2database:h2")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.springframework.graphql:spring-graphql-test")
 }
 
 val graphqlOutputDir = "$buildDir/generated/sources/graphql/"
@@ -83,8 +83,12 @@ tasks {
         apiNameSuffix = "Api"
         modelNameSuffix = "DTO"
         generateDataFetchingEnvironmentArgumentInApis = true
-        customTypesMapping = mutableMapOf(Pair("ID", "java.lang.Long"))
+        customTypesMapping = mapOf("ID" to "java.lang.Long", "Upload" to "jakarta.servlet.http.Part")
         modelValidationAnnotation = "@jakarta.validation.constraints.NotNull"
+        parentInterfaces {
+            queryResolver = "graphql.kickstart.tools.GraphQLQueryResolver"
+            mutationResolver = "graphql.kickstart.tools.GraphQLMutationResolver"
+        }
     }
 }
 

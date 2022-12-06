@@ -4,15 +4,28 @@ server:
 spring:
   liquibase:
     change-log: classpath:db/init-db.xml
-  graphql:
-    path: /graphql
-    websocket:
-      path: /graphql
-    graphiql:
-      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+
+graphql:
+  servlet:
+    enabled: true
+    mapping: /graphql
     cors:
-      allowed-origins: "*"
+      allowed-origins:
+        - "*"
+    tracing-enabled: true
+  graphiql:
+    mapping: /graphiql
+    endpoint:
+      graphql: /graphql
+    basePath: /
+    enabled: true
+    cdn:
+      enabled: false
+      version: 0.17.5
 
 logging:
   level:
     root: info
+
