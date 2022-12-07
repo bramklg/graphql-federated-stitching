@@ -14,7 +14,7 @@ services:
       - REVIEW_SERVICE=reviewservice:9003
       - USER_SERVICE=userservice:9004
     ports:
-      - "4000:9000"
+      - "9000:9000"
   inventoryservice:
     image: inventoryservice:latest
     container_name: inventoryservice
