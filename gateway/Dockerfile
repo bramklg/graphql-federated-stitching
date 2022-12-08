@@ -16,7 +16,7 @@ RUN corepack enable && corepack prepare yarn@3.3.0
 
 # Install dependencies (including dev dependencies because we need to build the app)
 COPY . .
-RUN yarn install
+RUN yarn install --immutable
 RUN yarn build
 
 # Optimize node_modules

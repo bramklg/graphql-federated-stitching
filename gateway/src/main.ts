@@ -31,7 +31,8 @@ const endpoints = [
 const schemaBuilder: SchemaBuilder = {
   buildSchema(endpoints: GraphQlEndpoint[]): GraphQLSchema {
     const subSchemas = endpoints.map(endpoint => {
-      return { schema: buildSchema(endpoint.sdl!), executor: endpoint.executor };
+      console.log(`Building schema for service ${endpoint.name}`)
+      return { schema: buildSchema(endpoint.sdl!, { assumeValidSDL: true }), executor: endpoint.executor };
     });
 
     const stitchedSchema = stitchSchemas({
