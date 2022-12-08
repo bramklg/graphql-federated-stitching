@@ -22,7 +22,7 @@ class UserApi(
     }
 
     override fun addAvatar(user: Long, file: Part, env: DataFetchingEnvironment): String {
-        return "storing file not implemented";
+        return "${file.submittedFileName} uploaded with a file size of ${file.size}bytes";
     }
 
     override fun user(id: Long, env: DataFetchingEnvironment): UserDTO? {
